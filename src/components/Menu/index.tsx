@@ -177,39 +177,6 @@ export default function Menu() {
             <hr />
           </li>
 
-          <li className="nav-item w-100">
-            <a
-              className="nav-link px-3 py-2 d-flex align-items-center gap-2 collapsed"
-              href="#"
-              role="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#cadastrarMenu"
-              aria-expanded="false"
-            >
-              <Plus size={18} /> Cadastrar
-            </a>
-            <div className="collapse" id="cadastrarMenu">
-              <ul className="navbar-nav ms-3 mt-2">
-                <li className="nav-item w-100">
-                  <NavLink
-                    className="nav-link px-3 py-2 text-muted small"
-                    to="/cadastrar/empresa"
-                  >
-                    Empresa
-                  </NavLink>
-                </li>
-                <li className="nav-item w-100">
-                  <NavLink
-                    className="nav-link px-3 py-2 text-muted small"
-                    to="/cadastrar/vaga"
-                  >
-                    Oportunidade
-                  </NavLink>
-                </li>
-              </ul>
-            </div>
-          </li>
-
           <li className="nav-item w-100 px-3 py-3 mt-auto">
             <NavLink
               className="btn btn-warning fw-bold w-100 d-flex align-items-center justify-content-center gap-2"

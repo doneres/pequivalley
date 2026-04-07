@@ -1,5 +1,5 @@
 import { NavLink } from "react-router";
-import { Home, Info, Briefcase, Building2, LogIn, Plus } from "lucide-react";
+import { Home, Info, Briefcase, Building2, LogIn } from "lucide-react";
 
 function PequiIcon({ size = 30 }) {
   return (

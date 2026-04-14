@@ -1,15 +1,14 @@
 import { useState } from "react";
 import {
-  DollarSign,
   X,
-  Briefcase,
   MapPin,
+  DollarSign,
+  Briefcase,
   ExternalLink,
   Mail,
   Building2,
   CheckCircle,
 } from "lucide-react";
-import styles from "./CardOportunidade.module.css";
 
 interface Oportunidade {
   titulo: string;
@@ -22,206 +21,163 @@ interface Oportunidade {
   nivel: "Júnior" | "Pleno" | "Sênior";
   requisitos: string[];
   descricaoCompleta: string[];
-  inscricao: {
-    tipo: "link" | "email";
-    valor: string;
-  };
+  inscricao: { tipo: "link" | "email"; valor: string };
 }
 
-const NIVEL_COR: Record<string, string> = {
-  Júnior: "#22c55e",
-  Pleno: "#3b82f6",
-  Sênior: "#f97316",
+const NIVEL_COLOR: Record<string, string> = {
+  Júnior:     "var(--clr-junior)",
+  Pleno:      "var(--clr-pleno)",
+  Sênior:     "var(--clr-senior)",
 };
 
-const TIPO_COR: Record<string, string> = {
-  Remoto: "#8b5cf6",
-  Presencial: "#ec4899",
-  Híbrido: "#14b8a6",
+const TIPO_COLOR: Record<string, string> = {
+  Remoto:     "var(--clr-remoto)",
+  Presencial: "var(--clr-presencial)",
+  Híbrido:    "var(--clr-hibrido)",
 };
 
 function Badge({ label, color }: { label: string; color: string }) {
   return (
     <span
-      className={styles.badge}
-      style={{
-        color,
-        background: color + "18",
-        border: `1px solid ${color}33`,
-      }}
+      className="opp-badge"
+      style={{ color, background: color + "18", border: `1px solid ${color}28` }}
     >
       {label}
     </span>
   );
 }
 
-export default function CardOportunidade({
-  titulo,
-  logoEmpresa,
-  nomeEmpresa,
-  sobreEmpresa,
-  remunacao,
-  localizacao,
-  tipo,
-  nivel,
-  requisitos,
-  descricaoCompleta,
-  inscricao,
-}: Oportunidade) {
-  const [aberto, setAberto] = useState(false);
+export default function CardOportunidade(props: Oportunidade) {
+  const {
+    titulo, logoEmpresa, nomeEmpresa, sobreEmpresa,
+    remunacao, localizacao, tipo, nivel,
+    requisitos, descricaoCompleta, inscricao,
+  } = props;
+
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      {/* Card */}
-      <div className={styles.card}>
-        <div className={styles.cardHeader}>
-          <img
-            src={logoEmpresa}
-            alt={nomeEmpresa}
-            className={styles.cardLogo}
-          />
-          <div className={styles.cardTitleContainer}>
-            <span className={styles.cardTitle}>{titulo}</span>
-            <span className={styles.cardCompany}>{nomeEmpresa}</span>
+      <div className="opp-card">
+        <div className="opp-card-header">
+          <img src={logoEmpresa} alt={nomeEmpresa} className="opp-card-logo" />
+          <div>
+            <p className="opp-card-title">{titulo}</p>
+            <span className="opp-card-company">{nomeEmpresa}</span>
           </div>
         </div>
 
-        <div className={styles.badgesContainer}>
-          <Badge label={nivel} color={NIVEL_COR[nivel]} />
-          <Badge label={tipo} color={TIPO_COR[tipo]} />
+        <div className="opp-badges">
+          <Badge label={nivel} color={NIVEL_COLOR[nivel]} />
+          <Badge label={tipo}  color={TIPO_COLOR[tipo]}  />
         </div>
 
-        <div className={styles.cardInfo}>
-          <div className={styles.infoRow}>
-            <MapPin size={13} color="#aaa" />
-            <span className={styles.infoText}>{localizacao}</span>
+        <div className="opp-info">
+          <div className="opp-info-row">
+            <MapPin size={12} color="var(--t3)" />
+            <span>{localizacao}</span>
           </div>
           {remunacao && (
-            <div className={styles.infoRow}>
-              <DollarSign size={13} color="#aaa" />
-              <span className={styles.infoText}>{remunacao}</span>
+            <div className="opp-info-row">
+              <DollarSign size={12} color="var(--t3)" />
+              <span>{remunacao}</span>
             </div>
           )}
         </div>
 
-        <div className={styles.cardFooter}>
-          <button onClick={() => setAberto(true)} className={styles.verVagaBtn}>
+        <div className="opp-card-footer">
+          <button className="opp-ver-btn" onClick={() => setOpen(true)}>
             Ver vaga
           </button>
         </div>
       </div>
 
-      {/* Modal */}
-      {aberto && (
+      {open && (
         <>
-          <div className={styles.backdrop} onClick={() => setAberto(false)} />
+          <div className="modal-backdrop" onClick={() => setOpen(false)} />
 
-          <div className={styles.modalWrapper} tabIndex={-1}>
-            <div className={styles.modalDialog}>
-              <div className={styles.modalContent}>
-                {/* Header */}
-                <div className={styles.modalHeader}>
-                  <div className={styles.modalHeaderContainer}>
-                    <img
-                      src={logoEmpresa}
-                      alt={nomeEmpresa}
-                      className={styles.modalLogo}
-                    />
-                    <div>
-                      <h5 className={styles.modalTitle}>{titulo}</h5>
-                      <span className={styles.modalCompany}>{nomeEmpresa}</span>
-                    </div>
+          <div className="modal-wrapper">
+            <div className="modal-box">
+              {/* Header */}
+              <div className="modal-head">
+                <div className="modal-head-left">
+                  <img src={logoEmpresa} alt={nomeEmpresa} className="modal-logo" />
+                  <div>
+                    <p className="modal-job-title">{titulo}</p>
+                    <span className="modal-company">{nomeEmpresa}</span>
                   </div>
-                  <button
-                    type="button"
-                    onClick={() => setAberto(false)}
-                    className={styles.closeBtn}
-                    aria-label="Fechar"
-                  >
-                    <X size={20} color="#888" />
-                  </button>
                 </div>
+                <button
+                  className="modal-close"
+                  onClick={() => setOpen(false)}
+                  aria-label="Fechar"
+                >
+                  <X size={14} />
+                </button>
+              </div>
 
-                {/* Body */}
-                <div className={styles.modalBody}>
-                  <div className={styles.badgesInfo}>
-                    <Badge label={nivel} color={NIVEL_COR[nivel]} />
-                    <Badge label={tipo} color={TIPO_COR[tipo]} />
-                    <span className={styles.infoSpan}>
-                      <MapPin size={13} color="#aaa" /> {localizacao}
+              {/* Body */}
+              <div className="modal-body">
+                <div className="modal-chips">
+                  <Badge label={nivel} color={NIVEL_COLOR[nivel]} />
+                  <Badge label={tipo}  color={TIPO_COLOR[tipo]}  />
+                  <span className="modal-chip">
+                    <MapPin size={12} color="var(--t3)" /> {localizacao}
+                  </span>
+                  {remunacao && (
+                    <span className="modal-chip">
+                      <DollarSign size={12} color="var(--t3)" /> {remunacao}
                     </span>
-                    {remunacao && (
-                      <span className={styles.infoSpan}>
-                        <DollarSign size={13} color="#aaa" /> {remunacao}
-                      </span>
-                    )}
-                  </div>
-
-                  <div>
-                    <div className={styles.sectionHeader}>
-                      <Briefcase size={15} color="#ffc107" />
-                      <span className={styles.sectionTitle}>Sobre a vaga</span>
-                    </div>
-                    {descricaoCompleta.map((desc, i) => (
-                      <p key={i} className={styles.descriptionText}>
-                        {desc}
-                      </p>
-                    ))}
-                  </div>
-
-                  <div>
-                    <div className={styles.sectionHeader}>
-                      <CheckCircle size={15} color="#ffc107" />
-                      <span className={styles.sectionTitle}>Requisitos</span>
-                    </div>
-                    <ul className={styles.requirementsList}>
-                      {requisitos.map((req, i) => (
-                        <li key={i} className={styles.requirementItem}>
-                          <span className={styles.requirementDot} />
-                          {req}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div>
-                    <div className={styles.sectionHeader}>
-                      <Building2 size={15} color="#ffc107" />
-                      <span className={styles.sectionTitle}>
-                        Sobre a empresa
-                      </span>
-                    </div>
-                    <p className={styles.aboutCompanyText}>{sobreEmpresa}</p>
-                  </div>
-                </div>
-
-                {/* Footer */}
-                <div className={styles.modalFooter}>
-                  <button
-                    onClick={() => setAberto(false)}
-                    className={styles.closeModalBtn}
-                  >
-                    Fechar
-                  </button>
-
-                  {inscricao.tipo === "link" ? (
-                    <a
-                      href={inscricao.valor}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.applicationLink}
-                    >
-                      <ExternalLink size={14} /> Candidatar-se
-                    </a>
-                  ) : (
-                    <a
-                      href={`mailto:${inscricao.valor}`}
-                      className={styles.applicationLink}
-                    >
-                      <Mail size={14} /> Enviar currículo
-                    </a>
                   )}
                 </div>
+
+                <div>
+                  <p className="modal-section-label">
+                    <Briefcase size={12} color="var(--amber)" /> Sobre a vaga
+                  </p>
+                  {descricaoCompleta.map((desc, i) => (
+                    <p key={i} className="modal-text">{desc}</p>
+                  ))}
+                </div>
+
+                <div>
+                  <p className="modal-section-label">
+                    <CheckCircle size={12} color="var(--amber)" /> Requisitos
+                  </p>
+                  <ul className="modal-req-list">
+                    {requisitos.map((req, i) => (
+                      <li key={i} className="modal-req-item">{req}</li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div>
+                  <p className="modal-section-label">
+                    <Building2 size={12} color="var(--amber)" /> Sobre a empresa
+                  </p>
+                  <p className="modal-text">{sobreEmpresa}</p>
+                </div>
+              </div>
+
+              {/* Footer */}
+              <div className="modal-foot">
+                <button className="modal-cancel-btn" onClick={() => setOpen(false)}>
+                  Fechar
+                </button>
+                {inscricao.tipo === "link" ? (
+                  <a
+                    href={inscricao.valor}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="modal-apply-btn"
+                  >
+                    <ExternalLink size={13} /> Candidatar-se
+                  </a>
+                ) : (
+                  <a href={`mailto:${inscricao.valor}`} className="modal-apply-btn">
+                    <Mail size={13} /> Enviar currículo
+                  </a>
+                )}
               </div>
             </div>
           </div>

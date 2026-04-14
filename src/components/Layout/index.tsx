@@ -4,14 +4,14 @@ import Footer from "../Footer";
 
 export default function Layout() {
   return (
-    <>
-      <div className="row g-0">
-        <Menu />
-        <main className="col-10">
+    <div className="app-layout">
+      <Menu />
+      <main className="app-main">
+        <div className="app-content">
           <Outlet />
-          <Footer />
-        </main>
-      </div>
-    </>
+        </div>
+        <Footer />
+      </main>
+    </div>
   );
 }
